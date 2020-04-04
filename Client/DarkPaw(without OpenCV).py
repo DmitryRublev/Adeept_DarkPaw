@@ -589,6 +589,6 @@ if __name__ == '__main__':
         loop()  # Load GUI
     except:
         tcpSocket.close()  # Close socket or it may not connect with the server again
-        footage_socket.close()
-        cv2.destroyAllWindows()
+        # footage_socket.close()
+        # cv2.destroyAllWindows()
         pass

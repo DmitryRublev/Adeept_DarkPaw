@@ -52,12 +52,12 @@ X_steady = 0
 Y_steady = 0
 X_pid = PID.PID()
 X_pid.SetKp(P)
-X_pid.SetKd(I)
-X_pid.SetKi(D)
+X_pid.SetKi(I)
+X_pid.SetKd(D)
 Y_pid = PID.PID()
 Y_pid.SetKp(P)
-Y_pid.SetKd(I)
-Y_pid.SetKi(D)
+Y_pid.SetKi(I)
+Y_pid.SetKd(D)
 
 try:
 	from mpu6050 import mpu6050
