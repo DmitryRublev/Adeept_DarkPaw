@@ -13,7 +13,7 @@ import time
 import threading as thread
 import tkinter as tk
 
-ip_stu=1		#Shows connection status
+is_connected=0		#Shows connection status
 c_f_stu = 0
 c_b_stu = 0
 c_l_stu = 0
@@ -286,7 +286,7 @@ def Info_receive():
 
 
 def socket_connect():	 #Call this function to connect with the server
-	global ADDR,tcpClicSock,BUFSIZ,ip_stu,ipaddr
+	global ADDR,tcpClicSock,BUFSIZ,is_connected,ipaddr
 	ip_adr=E1.get()	   #Get the IP address from Entry
 
 	if ip_adr == '':	  #If no input IP address in Entry,import a default IP
@@ -304,7 +304,7 @@ def socket_connect():	 #Call this function to connect with the server
 
 	for i in range (1,6): #Try 5 times if disconnected
 		#try:
-		if ip_stu == 1:
+		if is_connected == 0:
 			print("Connecting to server @ %s:%d..." %(SERVER_IP, SERVER_PORT))
 			print("Connecting")
 			tcpClicSock.connect(ADDR)		#Connection with the server
@@ -319,7 +319,7 @@ def socket_connect():	 #Call this function to connect with the server
 			E1.config(state='disabled')	  #Disable the Entry
 			Btn14.config(state='disabled')   #Disable the Entry
 			
-			ip_stu=0						 #'0' means connected
+			is_connected=1						 #'1' means connected
 
 			connection_threading=thread.Thread(target=connection_thread)		 #Define a thread for FPV and OpenCV
 			connection_threading.setDaemon(True)							 #'True' means it is a front thread,it would close when the mainloop() closes
@@ -335,24 +335,24 @@ def socket_connect():	 #Call this function to connect with the server
 			l_ip_4.config(text='Try %d/5 time(s)'%i)
 			l_ip_4.config(bg='#EF6C00')
 			print('Try %d/5 time(s)'%i)
-			ip_stu=1
+			is_connected=0
 			time.sleep(1)
 			continue
 
-	if ip_stu == 1:
+	if is_connected == 0:
 		l_ip_4.config(text='Disconnected')
 		l_ip_4.config(bg='#F44336')
 
 
 def connect(event):	   #Call this function to connect with the server
-	if ip_stu == 1:
+	if is_connected == 0:
 		sc=thread.Thread(target=socket_connect) #Define a thread for connection
 		sc.setDaemon(True)					  #'True' means it is a front thread,it would close when the mainloop() closes
 		sc.start()							  #Thread starts
 
 
 def connect_click():	   #Call this function to connect with the server
-	if ip_stu == 1:
+	if is_connected == 0:
 		sc=thread.Thread(target=socket_connect) #Define a thread for connection
 		sc.setDaemon(True)					  #'True' means it is a front thread,it would close when the mainloop() closes
 		sc.start()							  #Thread starts
